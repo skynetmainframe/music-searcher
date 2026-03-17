@@ -3,7 +3,9 @@
     <input type="text" placeholder="Search for a song" />
     <button class="primary" type="button">Search</button>
   </form>
-  <section>
-    <app-song-overview [song]="song" />
+  <section class="results">
+    @for (song of songList; track $index) {
+      <app-song-overview [song]="song" />
+    }
   </section>
 </section>

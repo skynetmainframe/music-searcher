@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SongOverview } from '../song-overview/song-overview';
 import { SongInfo } from '../songinfo';
+import { SongService } from '../song.service';
 
 @Component({
   selector: 'app-home',
@@ -9,20 +10,10 @@ import { SongInfo } from '../songinfo';
   styleUrl: './home.css',
 })
 export class Home {
-  songList: SongInfo[] = [
-    {
-      id: 0,
-      title: "Never Gonna Give You Up",
-      artist: "Rick Astley",
-      album: "Whenever You Need Somebody",
-      coverPhoto: "/public/album.png",
-    },
-    {
-      id: 1,
-      title: "Eintagsfliege",
-      artist: "Dominik Eulberg",
-      album: "Mannigfaltig",
-      coverPhoto: "/public/album.png",
-    },
-  ];
+  songList: SongInfo[] = [];
+  songService: SongService = inject(SongService);
+
+  constructor() {
+    this.songList = this.songService.getAllSongs();
+  }
 }

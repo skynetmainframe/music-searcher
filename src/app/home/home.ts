@@ -10,11 +10,11 @@ import { SongService } from '../song.service';
   template: `
     <section>
       <form>
-        <input type="text" placeholder="Search for a song" />
-        <button class="primary" type="button">Search</button>
+        <input type="text" placeholder="Filter by song title" #filter />
+        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
       </form>
       <section class="results">
-        @for (song of songList; track $index) {
+        @for (song of filteredSongList; track $index) {
           <app-song-overview [song]="song" />
         }
       </section>
@@ -24,9 +24,20 @@ import { SongService } from '../song.service';
 })
 export class Home {
   songList: SongInfo[] = [];
+  filteredSongList: SongInfo[] = [];
   songService: SongService = inject(SongService);
 
   constructor() {
     this.songList = this.songService.getAllSongs();
+    this.filteredSongList = this.songList;
   }
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredSongList = this.songList;
+      return;
+    }
+    this.filteredSongList = this.songList.filter((song) =>
+      song?.title.toLowerCase().includes(text.toLowerCase()),
+    );
+  }  
 }

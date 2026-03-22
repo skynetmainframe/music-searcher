@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { SongInfo } from '../songinfo';
+import {RouterOutlet, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-song-overview',
-  imports: [],
+  imports: [RouterLink],
   // templateUrl: './song-overview.html',
   template: `
   <section class="listing">
@@ -13,6 +14,7 @@ import { SongInfo } from '../songinfo';
     />
     <h2>{{ song().title }}</h2>
     <p>{{ song().artist }}, {{ song().album }}</p>
+    <a [routerLink]="['/songdetails', song().id]">Learn More</a>
   </section>  
   `,
   styleUrl: './song-overview.css',
